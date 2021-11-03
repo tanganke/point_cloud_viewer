@@ -31,3 +31,4 @@ dependencies:
 - GLFW: window manager
 - imgui: GUI library
 - spdlog: debug log
+- structopt: parse command line arguments
