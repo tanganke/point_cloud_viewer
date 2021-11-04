@@ -6,6 +6,14 @@
 
 extern PointCloud point_cloud;
 
+double mouse_scroll_state[2];
+void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
+{
+    spdlog::debug("Scrolling: {}, {}", xoffset, yoffset);
+    mouse_scroll_state[0] = xoffset;
+    mouse_scroll_state[1] = yoffset;
+}
+
 static const char *vertexShader = R"(#version 460 core
 
 layout(location = 0) in vec3 position;
@@ -109,6 +117,9 @@ void Window::Run()
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
     glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.w);
+    glPointSize(point_size);
+
+    glfwSetScrollCallback(window, &scroll_callback);
 
     if (camera_distance < 0)
     {
@@ -343,6 +354,7 @@ void Window::Run()
             static glm::dvec2 current_cursor, last_cursor;
             if (ImGui::IsWindowHovered())
             {
+                scene_windowHovered = true;
                 if (ImGui::IsMouseDown(ImGuiMouseButton_Left))
                 {
                     if (!mouse_down)
@@ -373,7 +385,20 @@ void Window::Run()
                 }
                 else
                 {
+                    scene_windowHovered = false;
                     mouse_down = false;
+                }
+
+                static float d = glm::distance(std::get<0>(bbox), std::get<1>(bbox));
+                if (mouse_scroll_state[1] > 0.5)
+                {
+                    camera_distance = std::max(d * 0.1f, camera_distance - 0.03f * d);
+                    mouse_scroll_state[1] = 0;
+                }
+                else if (mouse_scroll_state[1] < -0.5)
+                {
+                    camera_distance += 0.03f * d;
+                    mouse_scroll_state[1] = 0;
                 }
             }
         }

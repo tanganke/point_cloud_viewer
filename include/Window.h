@@ -45,6 +45,7 @@ private:
 
     int scene_windowPos[2]{0, 0};
     int scene_windowSize[2]{800, 800};
+    bool scene_windowHovered = false;
 
     float camera_fov{45.0f};
     float camera_distance{-1.0f};
