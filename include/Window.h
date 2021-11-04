@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#define _USE_MATH_DEFINES
 #include <glm/glm.hpp>
 #include <glm/gtx/string_cast.hpp>
 #include <imgui/imgui.h>
@@ -79,6 +80,7 @@ private:
         glfwGetMonitorContentScale(glfwGetPrimaryMonitor(), &xscale, &yscale);
         // io.Fonts->AddFontFromFileTTF(font_file.c_str(), 15 * (xscale + yscale) / 2);
         io.FontGlobalScale = (xscale + yscale) / 2;
+        io.IniFilename = nullptr;
     }
 
     inline void BeginUIFrame()
