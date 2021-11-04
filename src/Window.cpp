@@ -21,7 +21,10 @@ out vec3 fColor;
 void main()
 {
     gl_Position = mvp * vec4(position, 1.0);
-    fColor = color;
+    if(model[2][2] > 0.5)
+        fColor = color;
+    else 
+        fColor = color.xzy;
 }
     )";
 
@@ -242,15 +245,16 @@ void Window::Run()
             static std::string point_window = fmt::format("Points({})", point_cloud.points.size());
             if (ImGui::CollapsingHeader(point_window.c_str()))
             {
+                ImGui::Text("X,Y,Z");
                 const auto &points = point_cloud.get_points();
                 for (int i = 0; i < std::min<size_t>(points.size(), 10); i++)
                 {
                     std::string str;
 
                     if (flip_yz)
-                        str = fmt::format("{},{},{}", points[i].x, points[i].z, points[i].y).c_str();
+                        str = fmt::format("{},{},{}", points[i].x, points[i].z, points[i].y);
                     else
-                        str = fmt::format("{},{},{}", points[i].x, points[i].y, points[i].z).c_str();
+                        str = fmt::format("{},{},{}", points[i].x, points[i].y, points[i].z);
                     ImGui::Text(str.c_str());
                 }
                 if (points.size() > 10)
@@ -260,13 +264,18 @@ void Window::Run()
                 }
             }
 
-            static std::string color_window = fmt::format("Colors ({})", point_cloud.colors.size());
+            static std::string color_window = fmt::format("Colors({})", point_cloud.colors.size());
             if (ImGui::CollapsingHeader(color_window.c_str()))
             {
+                ImGui::Text("R,G,B");
                 const auto &colors = point_cloud.get_colors();
                 for (int i = 0; i < std::min<size_t>(colors.size(), 10); i++)
                 {
-                    std::string &&str = fmt::format("{},{},{}", colors[i].x, colors[i].y, colors[i].z).c_str();
+                    std::string str;
+                    if (flip_yz)
+                        str = fmt::format("{},{},{}", colors[i].x, colors[i].z, colors[i].y);
+                    else
+                        str = fmt::format("{},{},{}", colors[i].x, colors[i].y, colors[i].z);
                     ImGui::Text(str.c_str());
                 }
                 if (colors.size() > 10)
