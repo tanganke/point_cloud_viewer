@@ -4,9 +4,15 @@ Simple OpenGL program to visualize point cloud.
 
 The input data files should be **plain text** files.
 
+screenshot on Linux:
 ![](Screenshot.png)
 
-```
+
+screenshot on Windows 10:
+2,300,000 points(GTX 1650)
+![](Screenshot_2300K.png)
+
+```bash
 USAGE: point_cloud_viewer [OPTIONS] point_cloud 
 
 OPTIONS:
