@@ -26,7 +26,7 @@ jobs:
       run: pip3 install codespell
 
     - name: Lint
-      run: cmake -D FORMAT_COMMAND=clang-format-12 -P cmake/lint.cmake
+      run: cmake -D FORMAT_COMMAND=clang-format-13 -P cmake/lint.cmake
 
     - name: Spell check
       if: always()
@@ -86,7 +86,7 @@ jobs:
       with: { committish: "${{ env.VCPKG_COMMIT }}" }
 
     - name: Configure
-      env: { CXX: clang++-12 }
+      env: { CXX: clang++-13 }
       run: cmake --preset=ci-sanitize
 
     - name: Build
