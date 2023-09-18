@@ -8,9 +8,9 @@ extern PointCloud point_cloud;
 
 double mouse_scroll_state[2];
 void   scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
-    spdlog::debug("Scrolling: {}, {}", xoffset, yoffset);
-    mouse_scroll_state[0] = xoffset;
-    mouse_scroll_state[1] = yoffset;
+  spdlog::debug("Scrolling: {}, {}", xoffset, yoffset);
+  mouse_scroll_state[0] = xoffset;
+  mouse_scroll_state[1] = yoffset;
 }
 
 static const char* vertexShader = R"(#version 460 core
@@ -56,8 +56,12 @@ void Window::InitGLFW() {
 
 void Window::CreateGLFWWindow() {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
   glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
+#ifdef __APPLE__
+  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#endif
   glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
   glfwWindowHint(GLFW_VISIBLE, GL_TRUE);
   glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GL_FALSE);

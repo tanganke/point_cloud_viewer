@@ -50,7 +50,7 @@ class Window {
   float camera_fov { 45.0f };
   float camera_distance { -1.0f };
   float camera_theta {};
-  float camera_phi { M_PI_2 };
+  float camera_phi { static_cast<float>(M_PI_2) };
 
   bool  flip_yz { false };
   float point_size = 5.0f;

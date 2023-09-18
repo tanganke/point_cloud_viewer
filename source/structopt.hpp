@@ -15,6 +15,8 @@
 
 #include <type_traits>
 #include <utility>
+#include <string>
+#include <sstream>
 
 // Library version
 

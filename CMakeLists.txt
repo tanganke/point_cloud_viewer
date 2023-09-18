@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 
+set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+CACHE STRING "Vcpkg toolchain file")
 include(cmake/prelude.cmake)
 
 project(
